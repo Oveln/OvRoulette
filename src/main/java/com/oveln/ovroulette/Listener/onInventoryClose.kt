@@ -1,12 +1,14 @@
 package com.oveln.ovroulette.Listener
 
 import com.oveln.ovroulette.GUI.RouletterHolder
+import com.oveln.ovroulette.Main
 import com.oveln.ovroulette.Rouletter.Items
 import com.oveln.ovroulette.utils.GUIMaker
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
+import org.bukkit.scheduler.BukkitRunnable
 
 class onInventoryClose :Listener {
     @EventHandler
@@ -27,6 +29,12 @@ class onInventoryClose :Listener {
                 }while(nowslot!=0)
                 Items.items = nowitems
                 Items.calcRandomTable()
+            }
+            "roulette" -> {
+                if (holder.rouled)
+                    (object : BukkitRunnable() {
+                        override fun run() {event.player.openInventory(event.player.enderChest)}
+                    }).runTaskLater(Main.Instance , 1)
             }
         }
         return true

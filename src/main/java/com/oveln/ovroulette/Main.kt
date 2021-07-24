@@ -32,12 +32,12 @@ class Main : JavaPlugin() {
         }
         getCommand("roulette")!!.setExecutor(onroulette())
 
-        logger.info("${description.name}${description.version}&2启动成功   &c作者${description.authors}".colorful())
+        logger.info("&6${description.name}&f ${description.version}&2 启动成功   &c作者${description.authors}".colorful())
     }
     override fun onDisable() {
         Items.save()
         keys.save()
-        logger.info("${description.name}${description.version}&2关闭成功   &c作者${description.authors}".colorful())
+        logger.info("&6${description.name}&f ${description.version}&2 关闭成功   &c作者${description.authors}".colorful())
     }
     fun String.colorful():String {
         return this.replace("&" , "§")

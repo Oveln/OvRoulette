@@ -22,9 +22,11 @@ class onroulette : CommandExecutor,TabCompleter{
             "/roulette give <玩家名> <数量>          给玩家一定数量的钥匙",
             "/roulette setitem                     打开物品设置界面",
             "/roulette setprob                     打开概率设置界面",
+            "/roulette reload                      重载配置文件",
+            "/roulette save                        保存配置文件"
+
     )
     override fun onCommand(commandsender: CommandSender, cmd: Command, flag: String, args: Array<out String>): Boolean {
-        Main.Instance.logger.info(args.size.toString())
         if (args.isEmpty()) {
             HelpMessage.forEach{commandsender.sendMessage(it)}
             if (commandsender.isOp)
@@ -45,6 +47,15 @@ class onroulette : CommandExecutor,TabCompleter{
             if (player.isOp) {
                 if (args[0] == "setitem") RouletterHolder("setitem" , player).open(player)
                 if (args[0] == "setprob") RouletterHolder("setprob" , player).open(player)
+                if (args[0] == "reload") {
+                    Items.load()
+                    keys.load()
+                }
+                if (args[0] == "save") {
+                    Items.save()
+                    keys.save()
+                }
+                return true
             }
         }
         if (args.size == 3) {

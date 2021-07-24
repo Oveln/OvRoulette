@@ -4,7 +4,6 @@ import com.oveln.ovroulette.Main
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 import java.util.*
-import kotlin.collections.HashMap
 
 object keys {
     lateinit var keys : HashMap<UUID, Int>
@@ -24,7 +23,7 @@ object keys {
         if (!file.exists()) file.createNewFile()
         val keysfile = YamlConfiguration()
         keys.keys.forEach() {
-            keysfile.addDefault(it.toString() , keys[it])
+            keysfile.set(it.toString() , keys[it])
         }
         keysfile.save(file)
     }

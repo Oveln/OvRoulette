@@ -8,7 +8,6 @@ import com.oveln.ovroulette.utils.GUIMaker
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.inventory.InventoryType
 import org.bukkit.scheduler.BukkitRunnable
 
 class onInventoryClick : Listener {
@@ -38,11 +37,11 @@ class onInventoryClick : Listener {
             4-> flg = (event.inventory.holder as RouletterHolder).roulette(3)
             5-> flg = (event.inventory.holder as RouletterHolder).roulette(5)
         }
-        if (!flg) {
-            (object : BukkitRunnable() {
-                override fun run() = event.whoClicked.closeInventory()
-            }).runTaskLater(Main.Instance , 1)
-        }
+//        if (!flg) {
+//            (object : BukkitRunnable() {
+//                override fun run() = event.whoClicked.closeInventory()
+//            }).runTaskLater(Main.Instance , 1)
+//        }
     }
 //    fun setitem(event: InventoryClickEvent) {
 //        val item = event.inventory.getItem(event.slot)

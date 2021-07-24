@@ -3,13 +3,14 @@ package com.oveln.ovroulette.Rouletter
 import com.oveln.ovroulette.Main
 import com.oveln.ovroulette.utils.Config
 import com.oveln.ovroulette.utils.GUIMaker
-import net.minecraft.server.v1_12_R1.*
-import org.bukkit.Material
+import net.minecraft.server.v1_12_R1.NBTCompressedStreamTools
+import net.minecraft.server.v1_12_R1.NBTTagCompound
+import net.minecraft.server.v1_12_R1.NBTTagIntArray
+import net.minecraft.server.v1_12_R1.NBTTagList
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemStack
 import java.io.File
-
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import net.minecraft.server.v1_12_R1.ItemStack as ItemStack1
@@ -70,7 +71,6 @@ object Items {
             items.add(CraftItemStack.asBukkitCopy(ItemStack1(NBTitems.get(i))))
             wights.add(NBTwights.d()[i])
         }
-        Main.Instance.logger.info("读取了${items.size}个物品")
         while (items.size<26) items.add(GUIMaker.PANEMaker("空" , 8))
         while (wights.size<26) wights.add(0)
         calcRandomTable()
@@ -89,6 +89,5 @@ object Items {
         NBTout.set("wights" , NBTwights)
         NBTout.set("items" , NBTitems)
         NBTCompressedStreamTools.a(NBTout , FileOutputStream(path))
-        Main.Instance.logger.info("保存了${items.size}个物品")
     }
 }
