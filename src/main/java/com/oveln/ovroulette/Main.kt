@@ -4,6 +4,7 @@ import com.oveln.ovroulette.Listener.onInventoryClick
 import com.oveln.ovroulette.Listener.onInventoryClose
 import com.oveln.ovroulette.Listener.onPlayerChat
 import com.oveln.ovroulette.Rouletter.Items
+import com.oveln.ovroulette.Rouletter.keys
 import com.oveln.ovroulette.command.onroulette
 import com.oveln.ovroulette.utils.Config
 import org.bukkit.Bukkit
@@ -22,6 +23,7 @@ class Main : JavaPlugin() {
 
         Config.load()
         Items.load()
+        keys.load()
 
         Bukkit.getPluginManager().run {
             registerEvents(onInventoryClick() , this@Main)
@@ -30,10 +32,14 @@ class Main : JavaPlugin() {
         }
         getCommand("roulette")!!.setExecutor(onroulette())
 
-        logger.info("${description.name}${description.version}启动成功\n作者${description.authors}")
+        logger.info("${description.name}${description.version}&2启动成功   &c作者${description.authors}".colorful())
     }
     override fun onDisable() {
         Items.save()
-        logger.info("${description.name}${description.version}关闭成功\n作者${description.authors}")
+        keys.save()
+        logger.info("${description.name}${description.version}&2关闭成功   &c作者${description.authors}".colorful())
+    }
+    fun String.colorful():String {
+        return this.replace("&" , "§")
     }
 }

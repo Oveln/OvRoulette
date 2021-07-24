@@ -33,6 +33,14 @@ object GUIMaker {
         }
         return null
     }
+    fun PANEMaker(name: String, damage: Int , lore: List<String>):ItemStack {
+        val ret = ItemStack(Material.STAINED_GLASS_PANE , 1, damage.toShort())
+        val meta = ret.itemMeta
+        meta.displayName = name
+        meta.lore = lore
+        ret.itemMeta = meta
+        return ret
+    }
     fun PANEMaker(name: String, damage: Int):ItemStack {
         val ret = ItemStack(Material.STAINED_GLASS_PANE , 1, damage.toShort())
         val meta = ret.itemMeta

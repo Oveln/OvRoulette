@@ -21,7 +21,6 @@ object Items {
     var probitems: MutableList<ItemStack> = ArrayList()
     var enchitems : MutableList<ItemStack> = ArrayList()
     var wights : MutableList<Int> = ArrayList()
-    var key : ItemStack = ItemStack(Material.GOLD_INGOT)
     var allwights : Int = 0
 
     fun getprob(id: Int):Double {
@@ -57,7 +56,6 @@ object Items {
     }
     fun load() {
         file = File(path)
-        Main.Instance.logger.info(file.path)
         if (!file.exists()) {
             file.createNewFile()
             while (items.size<26) items.add(GUIMaker.PANEMaker("空" , 8))
@@ -68,7 +66,6 @@ object Items {
         val NBTin = NBTCompressedStreamTools.a(FileInputStream(path))
         val NBTitems = NBTin.get("items") as NBTTagList
         val NBTwights = NBTin.get("wights") as NBTTagIntArray
-        key = CraftItemStack.asBukkitCopy(ItemStack1(NBTin.get("key") as NBTTagCompound))
         for (i in 0 until NBTitems.size()) {
             items.add(CraftItemStack.asBukkitCopy(ItemStack1(NBTitems.get(i))))
             wights.add(NBTwights.d()[i])
@@ -88,7 +85,6 @@ object Items {
             NBTitems.add(nbt)
         }
         val nbt = NBTTagCompound()
-        CraftItemStack.asNMSCopy(key).save(nbt)
         NBTout.set("key" , nbt)
         NBTout.set("wights" , NBTwights)
         NBTout.set("items" , NBTitems)

@@ -2,6 +2,7 @@ package com.oveln.ovroulette.GUI
 
 import com.oveln.ovroulette.Main
 import com.oveln.ovroulette.Rouletter.Items
+import com.oveln.ovroulette.Rouletter.keys
 import com.oveln.ovroulette.utils.CharUtils
 import com.oveln.ovroulette.utils.Config
 import com.oveln.ovroulette.utils.GUIMaker
@@ -36,9 +37,9 @@ class RouletterHolder(val role : String,val player: Player) : InventoryHolder {
             nowslot = GUIMaker.NextSlot(gui , 0,0,8,5,nowslot)?: 0
         }
         GUIMaker.fill(gui , PANEMaker(" ", 15) , 1,1,7,4)
-        gui.setItem(3*9+3 , PANEMaker("单抽" , 5))
-        gui.setItem(3*9+4 , PANEMaker("三抽" , 5))
-        gui.setItem(3*9+5 , PANEMaker("五抽" , 5))
+        gui.setItem(3*9+3 , PANEMaker("单抽" , 5 , listOf("当前${Config.KeyName}数量:${keys.keys[player.uniqueId]?:0}")))
+        gui.setItem(3*9+4 , PANEMaker("三抽" , 5 , listOf("当前${Config.KeyName}数量:${keys.keys[player.uniqueId]?:0}")))
+        gui.setItem(3*9+5 , PANEMaker("五抽" , 5 , listOf("当前${Config.KeyName}数量:${keys.keys[player.uniqueId]?:0}")))
         (2..6).forEach() {
 //            gui.setItem(2*9+it , PANEMaker(" " , 3))
             gui.clear(2*9+it)
@@ -70,32 +71,20 @@ class RouletterHolder(val role : String,val player: Player) : InventoryHolder {
             player.sendMessage(CharUtils.t("&c你没有足够的空间"))
             return false
         }
-        if (!player.inventory.containsAtLeast(Items.key,Items.key.amount*i)) {
+        if (!keys.keys.containsKey(player.uniqueId) || keys.keys[player.uniqueId]!! < i) {
             player.sendMessage(CharUtils.t("&c你没有足够的${Config.KeyName}"))
             return false
         } else {
-            var num = i
-            (0 until player.inventory.size).forEach() {
-                if (Items.key.isSimilar(player.inventory.getItem(it))) {
-                    val amount = player.inventory.getItem(it).amount
-                    if (num < amount) {
-                        player.inventory.getItem(it).amount = amount -num
-                        num = 0
-                    } else {
-                        player.inventory.clear(it)
-                        num = num - amount
-                    }
-                }
-            }
+            keys.keys[player.uniqueId] = keys.keys[player.uniqueId]!! - i
         }
+//开始抽奖
         isrouling = true
-//        (2..6).forEach() {
-//            gui.setItem(2*9+it , PANEMaker(" " , 3))
-//        }
         (2..6).forEach() {
-//            gui.setItem(2*9+it , PANEMaker(" " , 3))
             gui.clear(2*9+it)
         }
+        gui.setItem(3*9+3 , PANEMaker("单抽" , 5 , listOf("当前${Config.KeyName}数量:${keys.keys[player.uniqueId]?:0}")))
+        gui.setItem(3*9+4 , PANEMaker("三抽" , 5 , listOf("当前${Config.KeyName}数量:${keys.keys[player.uniqueId]?:0}")))
+        gui.setItem(3*9+5 , PANEMaker("五抽" , 5 , listOf("当前${Config.KeyName}数量:${keys.keys[player.uniqueId]?:0}")))
         gift.clear();nowgift = 0
         repeat(i) {
             val randomint = (0..Items.allwights).random()

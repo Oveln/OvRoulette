@@ -3,6 +3,7 @@ package com.oveln.ovroulette.command
 import com.oveln.ovroulette.GUI.RouletterHolder
 import com.oveln.ovroulette.Main
 import com.oveln.ovroulette.Rouletter.Items
+import com.oveln.ovroulette.Rouletter.keys
 import com.oveln.ovroulette.utils.CharUtils
 import com.oveln.ovroulette.utils.Config
 import org.bukkit.Bukkit
@@ -14,13 +15,13 @@ import org.bukkit.entity.Player
 
 class onroulette : CommandExecutor,TabCompleter{
     private val HelpMessage = listOf(
-            "/roulette open                        打开抽奖界面"
+            "/roulette open                        打开抽奖界面",
+            "/roulette query                       查询${Config.KeyName}数量"
     )
     private val OPHelpMessage = listOf(
             "/roulette give <玩家名> <数量>          给玩家一定数量的钥匙",
             "/roulette setitem                     打开物品设置界面",
             "/roulette setprob                     打开概率设置界面",
-            "/roulette setkey                      将手上物品设置为Key"
     )
     override fun onCommand(commandsender: CommandSender, cmd: Command, flag: String, args: Array<out String>): Boolean {
         Main.Instance.logger.info(args.size.toString())
@@ -37,24 +38,19 @@ class onroulette : CommandExecutor,TabCompleter{
                 RouletterHolder("roulette" , player).open(player)
                 return true
             }
+            if (args[0] == "query") {
+                player.sendMessage(CharUtils.t("&6你当前有${keys.keys[player.uniqueId]?:0}个${Config.KeyName}"))
+                return true
+            }
             if (player.isOp) {
                 if (args[0] == "setitem") RouletterHolder("setitem" , player).open(player)
                 if (args[0] == "setprob") RouletterHolder("setprob" , player).open(player)
-                if (args[0] == "setkey") {
-                    val item = player.inventory.itemInMainHand
-                    item.amount = 1
-                    Items.key = item
-                    player.sendMessage(CharUtils.t("&2更改成功"))
-                    return true
-                }
             }
         }
         if (args.size == 3) {
             if (args[0] == "give") {
                 val p = Bukkit.getPlayer(args[1]) ?: return false
-                val key = Items.key.clone()
-                key.amount = args[2].toInt()
-                p.inventory.addItem(key)
+                keys.keys[p.uniqueId] = (keys.keys[p.uniqueId]?:0) + args[2].toInt()
                 p.sendMessage("你获得了${args[2]}个${Config.KeyName}")
             }
             return true
@@ -64,7 +60,7 @@ class onroulette : CommandExecutor,TabCompleter{
 
     override fun onTabComplete(commandsender: CommandSender, cmd: Command, flag: String, args: Array<out String>): MutableList<String>? {
         if (args.size == 1) {
-            if (commandsender.isOp) return listOf("setitem" , "setprob", "setkey" , "give" , "open").toMutableList()
+            if (commandsender.isOp) return listOf("setitem" , "setprob", "give" , "open").toMutableList()
             else return listOf("open").toMutableList()
         }
         return listOf("").toMutableList()
