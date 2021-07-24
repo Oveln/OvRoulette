@@ -1,0 +1,26 @@
+#标题
+Title: "抽奖"
+#货币名称
+KeyName: "钥匙"
+# 抽奖后玩家提示
+# %item1-5% 获得的物品
+PlayerMessages:
+  1:
+    - "你获得了%item1%"
+  3:
+    - "你获得了%item1%,%item2%,%item3%"
+  5:
+    - "你获得了%item1%,%item2%,%item3%,%item4%,%item5%"
+
+# 全服公告
+# %player% 玩家名称
+# %item1-5% 获得的物品
+Announcement:
+  1:
+    - "%player%获得了%item1%"
+  3:
+    - "%player%获得了%item1%,%item2%,%item3%"
+  5:
+    - "%player%获得了%item1%,%item2%,%item3%,%item4%,%item5%"
+# 概率显示( %probability% 为 XX% )
+Probability: "%probability%"
