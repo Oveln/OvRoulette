@@ -25,7 +25,6 @@ class onInventoryClick : Listener {
         return true
     }
     fun roulette(event: InventoryClickEvent) {
-        print(1)
         event.isCancelled = true
         if ((event.inventory.holder as RouletterHolder).isrouling) return
         val idx = event.slot%9
@@ -56,7 +55,6 @@ class onInventoryClick : Listener {
 //        }
 //    }
     fun setprob(event: InventoryClickEvent) {
-        print(3)
         event.isCancelled = true
         val idx = event.slot%9
         val idy = event.slot/9

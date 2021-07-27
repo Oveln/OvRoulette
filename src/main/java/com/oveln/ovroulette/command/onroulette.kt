@@ -22,8 +22,6 @@ class onroulette : CommandExecutor,TabCompleter{
             "/roulette give <玩家名> <数量>          给玩家一定数量的钥匙",
             "/roulette setitem                     打开物品设置界面",
             "/roulette setprob                     打开概率设置界面",
-            "/roulette reload                      重载配置文件",
-            "/roulette save                        保存配置文件"
 
     )
     override fun onCommand(commandsender: CommandSender, cmd: Command, flag: String, args: Array<out String>): Boolean {
@@ -31,6 +29,14 @@ class onroulette : CommandExecutor,TabCompleter{
             HelpMessage.forEach{commandsender.sendMessage(it)}
             if (commandsender.isOp)
                 OPHelpMessage.forEach{commandsender.sendMessage(it)}
+            return true
+        }
+        if (args.size == 3 && commandsender.isOp) {
+            if (args[0] == "give") {
+                val p = Bukkit.getPlayer(args[1]) ?: return false
+                keys.keys[p.uniqueId] = (keys.keys[p.uniqueId]?:0) + args[2].toInt()
+                p.sendMessage("你获得了${args[2]}个${Config.KeyName}")
+            }
             return true
         }
         if (commandsender !is Player) commandsender.sendMessage(CharUtils.t("&c只有玩家能输入这个指令"))
@@ -47,24 +53,8 @@ class onroulette : CommandExecutor,TabCompleter{
             if (player.isOp) {
                 if (args[0] == "setitem") RouletterHolder("setitem" , player).open(player)
                 if (args[0] == "setprob") RouletterHolder("setprob" , player).open(player)
-                if (args[0] == "reload") {
-                    Items.load()
-                    keys.load()
-                }
-                if (args[0] == "save") {
-                    Items.save()
-                    keys.save()
-                }
                 return true
             }
-        }
-        if (args.size == 3) {
-            if (args[0] == "give") {
-                val p = Bukkit.getPlayer(args[1]) ?: return false
-                keys.keys[p.uniqueId] = (keys.keys[p.uniqueId]?:0) + args[2].toInt()
-                p.sendMessage("你获得了${args[2]}个${Config.KeyName}")
-            }
-            return true
         }
         return false
     }

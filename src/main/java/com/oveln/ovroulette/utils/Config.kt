@@ -13,7 +13,7 @@ object Config {
     fun load() {
         Main.Instance.saveDefaultConfig()
         Title = CharUtils.t(config.getString("Title")?: "抽奖")
-        KeyName = CharUtils.t(config.getString("Keyname")?: "钥匙")
+        KeyName = CharUtils.t(config.getString("KeyName")?: "钥匙")
         Probability = CharUtils.t(config.getString("Probability")?: "%Probability%")
         RemainKey = CharUtils.t(config.getString("RemainKey")?: "&f当前钥匙数:%keys%")
         PlayerMessage = HashMap()

@@ -38,9 +38,9 @@ class RouletterHolder(val role : String,val player: Player) : InventoryHolder {
             nowslot = GUIMaker.NextSlot(gui , 0,0,8,5,nowslot)?: 0
         }
         GUIMaker.fill(gui , PANEMaker(" ", 15) , 1,1,7,4)
-        gui.setItem(3*9+3 , PANEMaker("单抽" , 5 , listOf(Config.RemainKey.replace("%keys%","${keys.keys[player.uniqueId]?:0}"))))
-        gui.setItem(3*9+4 , PANEMaker("三抽" , 5 , listOf(Config.RemainKey.replace("%keys%","${keys.keys[player.uniqueId]?:0}"))))
-        gui.setItem(3*9+5 , PANEMaker("五抽" , 5 , listOf(Config.RemainKey.replace("%keys%","${keys.keys[player.uniqueId]?:0}"))))
+        gui.setItem(3*9+3 , PANEMaker(CharUtils.t("&f单抽") , 5 , listOf(Config.RemainKey.replace("%keys%","${keys.keys[player.uniqueId]?:0}"))))
+        gui.setItem(3*9+4 , PANEMaker(CharUtils.t("&f三抽") , 5 , listOf(Config.RemainKey.replace("%keys%","${keys.keys[player.uniqueId]?:0}"))))
+        gui.setItem(3*9+5 , PANEMaker(CharUtils.t("&f五抽") , 5 , listOf(Config.RemainKey.replace("%keys%","${keys.keys[player.uniqueId]?:0}"))))
         (2..6).forEach() {
 //            gui.setItem(2*9+it , PANEMaker(" " , 3))
             gui.clear(2*9+it)
@@ -65,7 +65,7 @@ class RouletterHolder(val role : String,val player: Player) : InventoryHolder {
             5 -> giftslot = 2
         }
         var emptyslot = 0
-        repeat(36){
+        repeat(27){
             if (player.enderChest.getItem(it)==null) emptyslot++
         }
         if (emptyslot<i) {
@@ -84,9 +84,9 @@ class RouletterHolder(val role : String,val player: Player) : InventoryHolder {
         (2..6).forEach() {
             gui.clear(2*9+it)
         }
-        gui.setItem(3*9+3 , PANEMaker("单抽" , 5 , listOf(Config.RemainKey.replace("%keys%","${keys.keys[player.uniqueId]?:0}"))))
-        gui.setItem(3*9+4 , PANEMaker("三抽" , 5 , listOf(Config.RemainKey.replace("%keys%","${keys.keys[player.uniqueId]?:0}"))))
-        gui.setItem(3*9+5 , PANEMaker("五抽" , 5 , listOf(Config.RemainKey.replace("%keys%","${keys.keys[player.uniqueId]?:0}"))))
+        gui.setItem(3*9+3 , PANEMaker(CharUtils.t("单抽") , 5 , listOf(Config.RemainKey.replace("%keys%","${keys.keys[player.uniqueId]?:0}"))))
+        gui.setItem(3*9+4 , PANEMaker(CharUtils.t("三抽") , 5 , listOf(Config.RemainKey.replace("%keys%","${keys.keys[player.uniqueId]?:0}"))))
+        gui.setItem(3*9+5 , PANEMaker(CharUtils.t("五抽") , 5 , listOf(Config.RemainKey.replace("%keys%","${keys.keys[player.uniqueId]?:0}"))))
         gift.clear();nowgift = 0
         repeat(i) {
             val randomint = (0..Items.allwights).random()
