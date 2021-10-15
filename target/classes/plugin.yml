@@ -1,9 +1,0 @@
-name: OvRoulette
-main: com.oveln.ovroulette.Main
-version: 1.0
-author: Oveln
-api-version: "1.12"
-commands:
-  roulette:
-    description: 抽奖
-    usage: 请输入正确指令
